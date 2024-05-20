@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import BoardCard from './BoardCard'
+import Modal from './Modal'
+import CreateBoardForm from './CreateBoardForm'
 
 function App() {
   const data = [
@@ -18,6 +20,7 @@ function App() {
 
   const [filter, setFilter] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleFilterButtonClick = (event) => {
     console.log(event.target.innerHTML); // e.g. All, Recent
@@ -32,6 +35,14 @@ function App() {
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
   }
+
+  const handleCreateNewBoardClick = () => {
+    setIsModalOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   let filteredData = filter ? data.filter((item) => item.category === filter) : data;
   filteredData = searchQuery ? filteredData.filter((item) => item.title.toLowerCase().includes(searchQuery)) : filteredData;
@@ -56,7 +67,11 @@ function App() {
           <button onClick={handleFilterButtonClick}>Celebration</button>
           <button onClick={handleFilterButtonClick}>Thank You</button>
           <button onClick={handleFilterButtonClick}>Inspiration</button>
-          <button>Create a New Board</button>
+          <br />
+          <Modal isOpen={isModalOpen} onClose={closeModal}>
+            <CreateBoardForm />
+          </Modal>
+          <button onClick={handleCreateNewBoardClick}>Create a New Board</button>
         </div>
       </div>
       <div className='board-container'>
