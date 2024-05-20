@@ -1,6 +1,6 @@
 import './App.css'
 
-function BoardCard({ title, category }) {
+function BoardCard({ id, title, category, handleDeleteBoard }) {
 
     return (
         <div className='board-card'>
@@ -9,7 +9,7 @@ function BoardCard({ title, category }) {
             <h4>{category}</h4>
             <div className='board-card-buttons'>
                 <button>View Board</button>
-                <button>Delete Board</button>
+                <button onClick={() => handleDeleteBoard(id)}>Delete Board</button>
             </div>
         </div>
     )
